@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "M/03 — Senior Graphic Designer",
-  description: "Independent art direction, brand systems, and editorial design.",
+  title: "Usama Irshad — Brand & Motion Designer",
+  description: "Usama Irshad is a senior brand and motion designer based in Lahore. 8+ years building brand identities, packaging, and visuals with meaning. Open to remote projects.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body><a className="skip-link" href="#main-content">Skip to content</a>{children}</body>
     </html>
   );
 }
