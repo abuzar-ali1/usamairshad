@@ -1,0 +1,59 @@
+.hero { position: relative; isolation: isolate; height: 800px; overflow: hidden; background: var(--background); font-family: "Times New Roman", Times, serif; }
+.container { position: relative; width: min(100%, 1160px); height: 100%; margin-inline: auto; padding: 0 20px 24px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; pointer-events: none; }
+.portrait { position: absolute; z-index: 1; top: 30px; left: 50%; translate: -50% 0; width: 800px; height: 1000px; pointer-events: none; mask-image: linear-gradient(#000 55%, transparent 75%); }
+.portraitImage { object-fit: contain; object-position: center top; }
+.content { position: relative; z-index: 2; width: 580px; max-width: 100%; display: flex; flex-direction: column; gap: 16px; pointer-events: auto; }
+.title { display: flex; flex-direction: column; gap: 9px; }
+.eyebrow { font: 500 12px/1.4 "Courier New", monospace; text-transform: uppercase; letter-spacing: .16em; color: var(--lavender); }
+.title h1 { font-family: "Times New Roman", Times, serif; font-size: 64px; font-weight: 400; line-height: 1; letter-spacing: -.04em; color: #fff; }
+.subtitle { display: flex; justify-content: space-between; align-items: flex-start; min-height: 130px; }
+.quote { display: flex; flex-direction: column; gap: 4px; width: 46%; }
+.quote p { min-height: 54px; color: var(--muted); font: 400 18px/1 "Times New Roman", Times, serif; letter-spacing: -.045em; text-shadow: 0 1px 6px #03040c, 0 0 18px #03040c; }
+.quote p span { color: #fff; }
+.signature { display: flex; align-items: center; height: 72px; color: var(--lavender); font: italic 30px/1.4 "Segoe Script", "Brush Script MT", cursive; letter-spacing: -2px; transform: rotate(-7deg); transform-origin: left center; }
+.action { display: inline-flex; flex-shrink: 0; gap: 8px; align-items: center; width: fit-content; min-height: 40px; padding: 5px 12px 5px 5px; border: 1px solid transparent; border-radius: 100px; background: #fff; color: #131018; font: 400 16px/1 "Times New Roman", Times, serif; transition: background .25s; }
+.actionIcon { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #fff; background: #131018; transition: transform .3s; }
+.action:hover { background: var(--lavender); }
+.action:hover .actionIcon { transform: rotate(-35deg); }
+.carousel { position: absolute; z-index: 0; left: 0; right: 0; top: -30px; height: 587px; overflow: hidden; }
+.carouselStage { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; perspective: 650px; transform-style: preserve-3d; }
+.carouselRing { position: relative; flex-shrink: 0; width: 640px; height: 580px; transform-style: preserve-3d; will-change: transform; }
+.carouselPanel { position: absolute; top: 50%; left: 50%; width: 640px; height: 580px; transform-style: preserve-3d; backface-visibility: hidden; }
+.carouselPanel img { object-fit: cover; border-radius: 23px; pointer-events: none; }
+.header { position: absolute; z-index: 20; inset: 0 0 auto; font-family: "Times New Roman", Times, serif; }
+.headerInner { width: min(calc(100% - 40px), 1160px); min-height: 108px; margin-inline: auto; display: grid; grid-template-columns: 1fr .95fr .87fr .7fr auto; align-items: start; gap: 20px; padding-top: 12px; }
+.wordmark { font-size: 34px; line-height: 1; letter-spacing: -.065em; }
+.wordmark span { color: var(--lavender); }
+.headerNote { display: flex; flex-direction: column; font-size: 16px; line-height: 1.2; }
+.headerNote > span { color: var(--muted); }
+.headerNote strong { font-weight: 400; }
+.headerNav { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; font-size: 16px; line-height: 20px; }
+.headerNav a { display: block; position: relative; height: 20px; overflow: hidden; }
+.headerNav a span { display: block; transition: transform .3s cubic-bezier(.22, 1, .36, 1); }
+.headerNav a:hover span, .headerNav a:focus-visible span { transform: translateY(-100%); }
+.headerAction { background: transparent; border-color: var(--line); color: #fff; }
+.headerAction .actionIcon { background: #fff; color: #131018; }
+.headerAction:hover { color: #131018; }
+.menuToggle { display: none; }
+.mobileMenu { display: none; }
+@media (min-width: 810px) and (max-width: 1199px) {
+  .headerInner { grid-template-columns: 1fr 1fr 1fr auto; }
+  .headerNav { display: none; }
+}
+@media (max-width: 809px) {
+  .headerInner { display: flex; justify-content: space-between; align-items: center; min-height: 64px; padding-top: 0; }
+  .headerNote, .headerNav, .headerAction { display: none; }
+  .wordmark { font-size: 34px; }
+  .menuToggle { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -8px; border: 0; padding: 0; background: transparent; color: var(--foreground); }
+  .mobileMenu:not([hidden]) { display: flex; flex-direction: column; position: absolute; top: 64px; left: 20px; right: 20px; padding: 12px 20px; background: #10101bf5; border: 1px solid var(--line); border-radius: 12px; backdrop-filter: blur(16px); }
+  .mobileMenu a { display: flex; justify-content: space-between; align-items: center; padding-block: 12px; font-size: 20px; }
+  .portrait { top: 75px; width: 150%; max-width: 680px; height: auto; aspect-ratio: 1683 / 2103; mask-image: linear-gradient(#000 55%, transparent 78%); }
+  .title h1 { font-size: 40px; }
+  .subtitle { flex-direction: column; align-items: flex-end; gap: 16px; }
+  .quote { order: -1; width: 100%; min-height: 130px; }
+  .content { width: 100%; max-width: 580px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .headerNav a span, .actionIcon { transition: none; }
+  .carouselRing { will-change: auto; }
+}
