@@ -28,6 +28,20 @@ export const projects = [
     description: "An editorial exploration of space and form. Architectural imagery meets bold typography and a restrained visual system.",
     disciplines: ["Editorial", "Typography", "Visual system"],
   },
+  {
+    id: "pulse", title: "PULSE", category: "Campaign & motion direction",
+    image: "/images/pulse-concept.png",
+    alt: "PULSE campaign concept with sculptural chrome typography and flowing violet satin",
+    description: "A study in energy and expression. Fluid violet forms and sculptural lettering establish a visual direction for a brand in motion.",
+    disciplines: ["Campaign concept", "Typography", "Motion direction"],
+  },
+  {
+    id: "nova", title: "NOVA", category: "Brand identity",
+    image: "/images/nova-concept.png",
+    alt: "NOVA identity concept with lavender stationery, embossed black cards, and a violet wax seal",
+    description: "A refined identity system explored through tactile stationery, quiet typography, and a distinctive violet palette.",
+    disciplines: ["Brand identity", "Stationery", "Art direction"],
+  },
 ] as const;
 
 export const services = [

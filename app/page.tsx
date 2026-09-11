@@ -7,6 +7,7 @@ import { AboutSection } from "@/components/portfolio/about-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
 import { MotionProvider } from "@/components/portfolio/motion-provider";
 import { ScrollNavigation } from "@/components/portfolio/scroll-navigation";
+import showcase from "@/components/portfolio/showcase.module.css";
 
 export default function Home() {
   return (
@@ -15,10 +16,12 @@ export default function Home() {
       <ScrollNavigation />
       <main id="main-content">
         <Hero />
-        <div className="content-grid">
+        <div className={showcase.root}>
           <Introduction />
           <WorkSection />
           <ExperienceSection />
+        </div>
+        <div className="content-grid">
           <AboutSection />
         </div>
       </main>

@@ -1,14 +1,24 @@
+import { profile } from "@/lib/portfolio";
 import { Reveal } from "./reveal";
+import styles from "./showcase.module.css";
+
+const disciplines = ["Brand identity", "Packaging", "Motion design", "Art direction"];
 
 export function Introduction() {
   return (
-    <section id="intro" className="intro-section section-shell" aria-labelledby="intro-title">
-      <div className="discipline-strip" aria-label="Design disciplines">
-        <span>Brand identity</span><i>✳</i><span>Packaging</span><i>✳</i><span>Motion design</span><i>✳</i><span>Art direction</span>
+    <section id="intro" className={styles.introduction} aria-labelledby="intro-title">
+      <div className={styles.disciplineStrip} aria-label="Design disciplines">
+        <div className={styles.disciplineTrack}>
+          {[0, 1].map((copy) => <div key={copy} className={styles.disciplineGroup} aria-hidden={copy === 1 ? true : undefined}>
+            {disciplines.map((discipline, index) => <span key={discipline} className={styles[`discipline${index}`]}>{discipline}<i aria-hidden="true">✳</i></span>)}
+          </div>)}
+        </div>
       </div>
-      <div className="intro-grid">
-        <Reveal><p className="eyebrow">The idea comes first.</p><h2 id="intro-title">Good design gets seen.<br /><span>Meaningful design<br />gets remembered.</span></h2></Reveal>
-        <Reveal delay={.1} className="intro-description"><p>I’m Usama, a senior brand and motion designer building identities and packaging that make products sell.</p><p>With 8+ years in design and 40+ brands, I connect thoughtful ideas with purposeful visuals—across identity, packaging, and motion.</p><a className="text-link" href="#about">A little more about me <span>↗</span></a></Reveal>
+      <div className={styles.introGrid}>
+        <Reveal><h2 id="intro-title" className={styles.introTitle}>Design that sparks<br className={styles.desktopBreak} /> engagement and<br className={styles.desktopBreak} /> inspires action</h2></Reveal>
+        <Reveal delay={.12} className={styles.introDescription}>
+          <p>With over {profile.years} years of experience in design, I create thoughtful identities, packaging, and motion for brands with something to say. Having worked with {profile.brands}+ brands, I bring a clear idea and a considered visual language to every brief. I’m Usama Irshad, a senior brand and motion designer based in Lahore, connecting strategy with craft to make brands memorable.</p>
+        </Reveal>
       </div>
     </section>
   );

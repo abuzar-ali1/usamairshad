@@ -1,26 +1,41 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type PointerEvent } from "react";
 import Image from "next/image";
 import { ArrowUpRight, X } from "lucide-react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { projects } from "@/lib/portfolio";
-import { Reveal, ScrollHeading } from "./reveal";
+import { ScrollHeading } from "./reveal";
+import styles from "./showcase.module.css";
 
 function ProjectCard({ project, index }: { project: typeof projects[number]; index: number }) {
   const card = useRef<HTMLElement>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: card, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [-22, 22]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [-14, 14]);
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const x = useSpring(pointerX, { stiffness: 220, damping: 25 });
+  const y = useSpring(pointerY, { stiffness: 220, damping: 25 });
+  function movePreview(event: PointerEvent<HTMLButtonElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    pointerX.set(Math.min(rect.width - 158, Math.max(10, event.clientX - rect.left + 16)));
+    pointerY.set(Math.min(rect.height - 50, Math.max(10, event.clientY - rect.top + 16)));
+  }
   return (
-    <motion.article ref={card} className={`project-card project-${index}`} whileHover={reduce ? {} : { y: -7 }} transition={{ duration: .4 }}>
-      <button className="project-image-button" onClick={() => dialog.current?.showModal()} aria-label={`View ${project.title} demo concept`}>
-        <motion.div className="project-image" style={reduce ? {} : { y }}><Image src={project.image} alt={project.alt} fill sizes="(max-width: 700px) 90vw, 45vw" /></motion.div>
-        <span className="project-category">{project.category}</span>
-        <span className="project-hover">Explore concept <ArrowUpRight size={20} /></span>
+    <motion.article ref={card} className={styles.projectCard} initial={false}
+      whileInView={reduce ? {} : { y: [55, 0], opacity: [.5, 1] }}
+      viewport={{ once: true, amount: .08 }} transition={{ duration: .9, delay: index % 2 * .1, ease: [.22, 1, .36, 1] }}>
+      <button className={styles.projectImageButton} onPointerMove={movePreview} onClick={() => dialog.current?.showModal()} aria-label={`View ${project.title} demo concept`}>
+        <motion.div className={styles.projectImage} style={reduce ? {} : { y: imageY }}><Image src={project.image} alt={project.alt} fill sizes="(max-width: 700px) 94vw, 46vw" /></motion.div>
+        <span className={styles.projectCategory}>{project.category}</span>
+        <motion.span aria-hidden="true" className={styles.projectCursor} style={reduce ? { x: pointerX, y: pointerY } : { x, y }}>Click to preview <ArrowUpRight size={16} /></motion.span>
       </button>
-      <div className="project-info"><div><h3>{project.title}</h3><span>Demo concept · Not client work</span></div><button onClick={() => dialog.current?.showModal()} className="square-button" aria-label={`Read about ${project.title}`}><ArrowUpRight size={23} /></button></div>
+      <div className={styles.projectInfo}>
+        <div><h3>{project.title}</h3><span>Demo concept</span></div>
+        <button onClick={() => dialog.current?.showModal()} className={styles.viewProject} aria-label={`View ${project.title} project`}>View Project <ArrowUpRight size={23} /></button>
+      </div>
       <dialog ref={dialog} className="project-dialog" aria-labelledby={`${project.id}-title`} aria-describedby={`${project.id}-description`} data-lenis-prevent onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
         <div className="project-dialog-content">
           <button className="dialog-close" aria-label="Close project" onClick={() => dialog.current?.close()}><X size={24} /></button>
@@ -34,11 +49,10 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
 export function WorkSection() {
   return (
-    <section id="work" className="work-section section-shell" aria-label="Selected design explorations">
-      <div className="section-kicker"><p className="eyebrow">A sense of the possibilities</p><span>01 — 02</span></div>
-      <ScrollHeading className="display-heading">Projects</ScrollHeading>
-      <div className="project-grid">{projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</div>
-      <Reveal className="work-note"><span className="tiny-dot" /><p>Showcase previews. Original client projects will take their place.</p></Reveal>
+    <section id="work" className={styles.work} aria-label="Selected design explorations">
+      <ScrollHeading className={styles.projectsHeading}>Projects</ScrollHeading>
+      <div className={styles.projectGrid}>{projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</div>
+      <p className={styles.workNote}>Design explorations · Demo concepts, not commissioned client work.</p>
     </section>
   );
 }
