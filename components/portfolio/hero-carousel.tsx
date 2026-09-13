@@ -23,14 +23,14 @@ export function HeroCarousel() {
   const active = useInView(stage);
   const reducedMotion = useReducedMotion();
   const rotation = useMotionValue(0);
-  const scale = useMotionValue(0.943103);
+  const scale = useMotionValue(0.848793);
   const transform = useMotionTemplate`translateZ(-470px) scale(${scale}) rotateY(${rotation}deg)`;
 
   useEffect(() => {
     if (!stage.current) return;
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      scale.set(Math.max(0.1, Math.min((width - 40) / 640, (height - 40) / 580)));
+      scale.set(Math.max(0.1, Math.min((width - 40) / 640, (height - 40) / 580)) * 0.9);
     });
     observer.observe(stage.current);
     return () => observer.disconnect();

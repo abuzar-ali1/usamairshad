@@ -25,16 +25,14 @@ export function Hero() {
             <p className={styles.eyebrow}>Hi, I’m Usama Irshad</p>
             <h1 id="hero-title">Brand &amp;<br />Motion Designer</h1>
           </div>
-          <div className={styles.subtitle}>
-            <a href="#contact" className={styles.action}>
-              <span className={styles.actionIcon}><ArrowRight size={18} aria-hidden="true" /></span>
-              <span>Start a project</span>
-            </a>
-            <div className={styles.quote}>
-              <p>“Where others add visuals,<br />I create <span>meaning.</span>”</p>
-              <span className={styles.signature}>Usama Irshad</span>
-            </div>
+          <div className={styles.quote}>
+            <p>“Where others add visuals,<br />I create <span>meaning.</span>”</p>
+            <span className={styles.signature}>Usama Irshad</span>
           </div>
+          <a href="#contact" className={styles.action}>
+            <span className={styles.actionIcon}><ArrowRight size={18} aria-hidden="true" /></span>
+            <span>Start a project</span>
+          </a>
         </div>
       </div>
     </section>
