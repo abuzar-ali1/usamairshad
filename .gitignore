@@ -25,6 +25,7 @@
 *.pem
 /.git.codex-unborn-backup/
 /.git.codex-unborn-backup-2/
+/.sites-runtime/
 
 # debug
 npm-debug.log*
