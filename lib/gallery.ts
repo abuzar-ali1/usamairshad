@@ -5,6 +5,7 @@ export type GalleryImage = {
   alt: string;
   width: number;
   zoom?: number;
+  background?: string;
   entrance?: { x?: number; y?: number; scale?: number; rotate?: number; rotateX?: number; rotateY?: number };
 };
 
@@ -15,8 +16,8 @@ export const galleryRows: { height: number; drift: [number, number]; images: Gal
     height: 317,
     drift: [-90, -160],
     images: [
-      { file: "CAnTuyC7rYGbO1sbhC8LNj6E", alt: "Yellow product advertising design", width: 297.85, entrance: { x: -1500, y: 300, scale: 2.5, rotate: -5, rotateY: 70 } },
-      { file: "xU3Y5CRvHR14O0gvFohqrB3Yk", alt: "Laptop website presentation on a yellow background", width: 482, zoom: 1.37 },
+      { file: "CAnTuyC7rYGbO1sbhC8LNj6E", alt: "Natural supplements product advertising design", width: 297.85, entrance: { x: -1500, y: 300, scale: 2.5, rotate: -5, rotateY: 70 } },
+      { file: "xU3Y5CRvHR14O0gvFohqrB3Yk", alt: "Laptop website presentation on a yellow background", width: 482, zoom: 1.37, background: "#ffe063" },
       { file: "am0JIL2cCzcIYLmZLvS6WH9le3w", alt: "B2B growth website presented on a tablet", width: 297.85, entrance: { x: -1800, y: 900, scale: 2.5, rotate: -15, rotateY: 90 } },
       { file: "Q0EhmPUW3FYrVagtcCUuSyJMDvk", alt: "Luxury watch website in a black laptop mockup", width: 297.85, entrance: { x: -600, y: -200, scale: 1.5, rotate: 5, rotateY: 50 } },
       { file: "D5to85TmmFI4rAuvfbNqLXriSc", alt: "Chainora Web3 website with violet lighting", width: 482 },

@@ -21,8 +21,8 @@ export default function Home() {
           <Introduction />
           <WorkSection />
           <ExperienceSection />
+          <GallerySection />
         </div>
-        <GallerySection />
         <div className="content-grid">
           <AboutSection />
         </div>

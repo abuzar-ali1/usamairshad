@@ -25,7 +25,10 @@ export function ScrollNavigation() {
     setActive(candidates[0]?.id ?? "home");
   }
   useMotionValueEvent(scrollY, "change", updatePosition);
-  useEffect(() => { updatePosition(window.scrollY); }, []);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => updatePosition(window.scrollY));
+    return () => cancelAnimationFrame(frame);
+  }, []);
   return (
     <motion.nav className={styles.navigation} aria-label="Section navigation" inert={!visible} initial={false}
       animate={{ y: visible ? 0 : -140, opacity: visible ? 1 : 0 }} transition={{ duration: reduce ? 0 : .4 }}>

@@ -5,7 +5,6 @@
   height: 1190px;
   padding-top: 120px;
   overflow-x: clip;
-  background: radial-gradient(ellipse 100% 700px at 50% 0, #f66b6b, transparent 95%), #000;
   font-family: "Portfolio Inter", Arial, sans-serif;
   scroll-margin-top: 100px;
 }
@@ -30,14 +29,13 @@
   position: relative;
   z-index: 2;
   left: 50%;
-  translate: -50% 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: calc(10px * var(--gallery-scale));
   width: max-content;
   padding: 50px 0 60px;
-  transform: perspective(1971px) rotate(-5deg);
+  transform: translateX(-50%) perspective(1971px) rotate(-5deg);
 }
 
 .rowTrack { position: relative; width: max-content; height: calc(var(--row-height) * var(--gallery-scale)); }
@@ -52,7 +50,7 @@
 }
 
 @media (max-width: 700px) {
-  .gallery { --gallery-scale: .55; height: 690px; padding-top: 65px; background: radial-gradient(ellipse 150% 500px at 50% 0, #f66b6b, transparent 95%), #000; }
+  .gallery { --gallery-scale: .55; height: 690px; padding-top: 65px; }
   .heading { left: 20px; top: -20px; font-size: clamp(82px, 22vw, 150px); }
   .stage { padding-top: 35px; }
 }

@@ -4,7 +4,7 @@
 
 .root { --content-width: min(75%, 1425px); position: relative; isolation: isolate; color: #f8f7fc; background: linear-gradient(var(--background), #000 600px); font-family: "Portfolio Inter", Arial, sans-serif; }
 .root::before { content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / 6 - 1px), #dfd3ff13 calc(100% / 6 - 1px), #dfd3ff13 calc(100% / 6)); background-size: 100% 100%; background-position: calc(100vw / 12) 0; mask-image: linear-gradient(transparent, #000 220px); }
-.root::after { content: ""; position: absolute; z-index: -2; inset: 0; pointer-events: none; background: radial-gradient(ellipse 850px 260px at 50% 0, #8550ef1c, transparent 100%), radial-gradient(ellipse 100% 600px at 50% 100%, #f66b6b, transparent 100%); }
+.root::after { content: ""; position: absolute; z-index: -2; inset: 0; pointer-events: none; background: radial-gradient(ellipse 850px 260px at 50% 0, #8550ef1c, transparent 100%), radial-gradient(ellipse 75% 900px at 50% calc(100% - 850px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
 .introduction { padding-top: 18px; }
 .disciplineStrip { overflow: hidden; padding: 22px 0 34px; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .disciplineTrack { display: flex; width: max-content; animation: disciplines-drift 35s linear infinite; }
@@ -19,15 +19,15 @@
 .introDescription { font-size: clamp(18px, 1.25vw, 24px); line-height: 1.55; color: #ddd8e4; letter-spacing: -.015em; }
 
 .work { position: relative; width: min(84%, 1500px); margin-inline: auto; padding: 0; scroll-margin-top: 105px; }
-.projectsHeading { font-family: inherit; font-size: clamp(110px, 17.5vw, 340px); font-weight: 600; line-height: 1.08; letter-spacing: -.045em; color: #606060; margin-left: 0; margin-bottom: -.43em; }
-.projectGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 2vw, 38px); position: relative; }
+.projectsHeading { font-family: inherit; font-size: clamp(110px, 17.5vw, 260px); font-weight: 600; line-height: 1.15; letter-spacing: -.02em; color: #606060; margin-left: 0; margin-bottom: -.43em; }
+.projectGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; position: relative; }
 .projectCard { min-width: 0; border: 1px solid #ffffff0f; border-radius: 9px; background: #1f1f1f; }
 .projectImageButton { position: relative; display: block; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; border: 0; border-radius: 8px 8px 0 0; padding: 0; background: #101014; text-align: left; color: white; }
 .projectImage { position: absolute; inset: -15px 0; transition: scale .65s cubic-bezier(.22,1,.36,1); }
 .projectImage img { object-fit: cover; }
 .projectCategory { position: absolute; left: 3.2%; top: 4%; padding: 6px 10px; border-radius: 2px; font-size: clamp(14px, 1.07vw, 20px); background: #343236d9; backdrop-filter: blur(8px); letter-spacing: -.025em; }
 .projectCursor { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 100px; background: #0e0b16e8; box-shadow: 0 0 28px #8550ef40; color: #eee6ff; font-size: 13px; opacity: 0; pointer-events: none; transition: opacity .2s; white-space: nowrap; }
-.projectInfo { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(15px, 1.3vw, 24px); min-height: 78px; }
+.projectInfo { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; min-height: 78px; }
 .projectInfo h3 { font: 600 20px / 1.2 "Portfolio Inter", Arial, sans-serif; color: #d4d1d8; letter-spacing: -.025em; }
 .projectInfo > div > span { display: block; font-size: 11px; color: #9e98a8; margin-top: 5px; }
 .viewProject { display: flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; min-height: 42px; padding: 9px 12px; background: #ffffff08; color: #f4f1f7; border: 1px solid #ffffff40; border-radius: 4px; font-size: 16px; font-weight: 600; box-shadow: 0 0 28px #c9bce211; transition: background .25s, border-color .25s, box-shadow .25s; }
@@ -81,12 +81,14 @@
   .projectImageButton:hover .projectCursor { opacity: 1; }
 }
 @media (max-width: 1100px) {
+  .root::after { background: radial-gradient(ellipse 85% 750px at 50% calc(100% - 700px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
   .root { --content-width: min(84%, 1425px); }
   .desktopBreak { display: none; }
   .stats { width: 96%; }
   .navigation { width: min(840px, calc(100% - 32px)); }
 }
 @media (max-width: 700px) {
+  .root::after { background: radial-gradient(ellipse 130% 570px at 50% calc(100% - 450px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
   .root { --content-width: calc(100% - 40px); }
   .root::before { background-size: 150% 100%; }
   .disciplineStrip { padding: 20px 0; }

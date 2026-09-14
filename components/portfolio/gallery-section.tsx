@@ -19,7 +19,7 @@ function GalleryTile({ image, progress }: { image: GalleryImage; progress: Motio
 
   return (
     <div className={styles.tileSlot} style={{ "--tile-width": `${image.width}px` } as CSSProperties}>
-      <motion.div className={styles.tile} style={reduce ? undefined : { x, y, scale, rotate, rotateX, rotateY, opacity }}>
+      <motion.div className={styles.tile} style={{ background: image.background, ...(reduce ? {} : { x, y, scale, rotate, rotateX, rotateY, opacity }) }}>
         <Image src={`/images/gallery/${image.file}.avif`} alt={image.alt} fill sizes={`${image.width}px`} draggable={false} style={{ scale: image.zoom ?? 1 }} />
       </motion.div>
     </div>
