@@ -2,9 +2,9 @@
 @font-face { font-family: "Portfolio Inter"; src: url("/fonts/inter-display-semibold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Portfolio Inter"; src: url("/fonts/inter-display-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
 
-.root { --content-width: min(75%, 1425px); position: relative; isolation: isolate; color: #f8f7fc; background: linear-gradient(var(--background), #000 600px); font-family: "Portfolio Inter", Arial, sans-serif; }
+.root { --content-width: min(75%, 1425px); --gallery-glow-width: 75%; --gallery-glow-height: 900px; --gallery-glow-offset: 850px; position: relative; isolation: isolate; color: #f8f7fc; background: linear-gradient(var(--background), #000 600px); font-family: "Portfolio Inter", Arial, sans-serif; }
 .root::before { content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / 6 - 1px), #dfd3ff13 calc(100% / 6 - 1px), #dfd3ff13 calc(100% / 6)); background-size: 100% 100%; background-position: calc(100vw / 12) 0; mask-image: linear-gradient(transparent, #000 220px); }
-.root::after { content: ""; position: absolute; z-index: -2; inset: 0; pointer-events: none; background: radial-gradient(ellipse 850px 260px at 50% 0, #8550ef1c, transparent 100%), radial-gradient(ellipse 75% 900px at 50% calc(100% - 850px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
+.root::after { content: ""; position: absolute; z-index: -2; inset: 0; pointer-events: none; background: radial-gradient(ellipse 850px 260px at 50% 0, #8550ef1c, transparent 100%), radial-gradient(ellipse var(--gallery-glow-width) var(--gallery-glow-height) at 50% calc(100% - var(--gallery-glow-offset)), var(--accent) 10%, color-mix(in srgb, var(--accent) 50%, transparent) 48%, transparent 95%); }
 .introduction { padding-top: 18px; }
 .disciplineStrip { overflow: hidden; padding: 22px 0 34px; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .disciplineTrack { display: flex; width: max-content; animation: disciplines-drift 35s linear infinite; }
@@ -81,15 +81,13 @@
   .projectImageButton:hover .projectCursor { opacity: 1; }
 }
 @media (max-width: 1100px) {
-  .root::after { background: radial-gradient(ellipse 85% 750px at 50% calc(100% - 700px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
-  .root { --content-width: min(84%, 1425px); }
+  .root { --content-width: min(84%, 1425px); --gallery-glow-width: 85%; --gallery-glow-height: 750px; --gallery-glow-offset: 700px; }
   .desktopBreak { display: none; }
   .stats { width: 96%; }
   .navigation { width: min(840px, calc(100% - 32px)); }
 }
 @media (max-width: 700px) {
-  .root::after { background: radial-gradient(ellipse 130% 570px at 50% calc(100% - 450px), #ff7e82 10%, #ff6b7080 48%, transparent 95%); }
-  .root { --content-width: calc(100% - 40px); }
+  .root { --content-width: calc(100% - 40px); --gallery-glow-width: 130%; --gallery-glow-height: 570px; --gallery-glow-offset: 450px; }
   .root::before { background-size: 150% 100%; }
   .disciplineStrip { padding: 20px 0; }
   .disciplineGroup { width: 950px; }

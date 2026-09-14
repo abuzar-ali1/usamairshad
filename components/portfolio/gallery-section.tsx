@@ -4,22 +4,15 @@ import Image from "next/image";
 import { useRef, type CSSProperties } from "react";
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { galleryRows, type GalleryImage } from "@/lib/gallery";
+import { useGalleryMotion } from "@/hooks/use-gallery-motion";
 import styles from "./gallery.module.css";
 
 function GalleryTile({ image, progress }: { image: GalleryImage; progress: MotionValue<number> }) {
-  const reduce = useReducedMotion();
-  const entrance = image.entrance;
-  const x = useTransform(progress, [0, 1], [entrance?.x ?? 0, 0]);
-  const y = useTransform(progress, [0, 1], [entrance?.y ?? 0, 0]);
-  const scale = useTransform(progress, [0, 1], [entrance?.scale ?? 1, 1]);
-  const rotate = useTransform(progress, [0, 1], [entrance?.rotate ?? 0, 0]);
-  const rotateX = useTransform(progress, [0, 1], [entrance?.rotateX ?? 0, 0]);
-  const rotateY = useTransform(progress, [0, 1], [entrance?.rotateY ?? 0, 0]);
-  const opacity = useTransform(progress, [0, 1], [entrance ? 0 : 1, 1]);
+  const animation = useGalleryMotion(progress, image.entrance);
 
   return (
     <div className={styles.tileSlot} style={{ "--tile-width": `${image.width}px` } as CSSProperties}>
-      <motion.div className={styles.tile} style={{ background: image.background, ...(reduce ? {} : { x, y, scale, rotate, rotateX, rotateY, opacity }) }}>
+      <motion.div className={styles.tile} style={{ background: image.background, ...animation }}>
         <Image src={`/images/gallery/${image.file}.avif`} alt={image.alt} fill sizes={`${image.width}px`} draggable={false} style={{ scale: image.zoom ?? 1 }} />
       </motion.div>
     </div>
