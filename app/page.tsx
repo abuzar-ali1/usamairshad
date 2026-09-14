@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/portfolio/site-header";
 import { Introduction } from "@/components/portfolio/introduction";
 import { WorkSection } from "@/components/portfolio/work-section";
 import { ExperienceSection } from "@/components/portfolio/experience-section";
+import { GallerySection } from "@/components/portfolio/gallery-section";
 import { AboutSection } from "@/components/portfolio/about-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
 import { MotionProvider } from "@/components/portfolio/motion-provider";
@@ -21,6 +22,7 @@ export default function Home() {
           <WorkSection />
           <ExperienceSection />
         </div>
+        <GallerySection />
         <div className="content-grid">
           <AboutSection />
         </div>

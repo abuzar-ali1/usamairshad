@@ -28,7 +28,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
       whileInView={reduce ? {} : { y: [55, 0], opacity: [.5, 1] }}
       viewport={{ once: true, amount: .08 }} transition={{ duration: .9, delay: index % 2 * .1, ease: [.22, 1, .36, 1] }}>
       <button className={styles.projectImageButton} onPointerMove={movePreview} onClick={() => dialog.current?.showModal()} aria-label={`View ${project.title} demo concept`}>
-        <motion.div className={styles.projectImage} style={reduce ? {} : { y: imageY }}><Image src={project.image} alt={project.alt} fill sizes="(max-width: 700px) 94vw, 46vw" /></motion.div>
+        <motion.div className={styles.projectImage} style={reduce ? {} : { y: imageY }}><Image src={project.image} alt={project.alt} fill sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1785px) 41vw, 735px" /></motion.div>
         <span className={styles.projectCategory}>{project.category}</span>
         <motion.span aria-hidden="true" className={styles.projectCursor} style={reduce ? { x: pointerX, y: pointerY } : { x, y }}>Click to preview <ArrowUpRight size={16} /></motion.span>
       </button>

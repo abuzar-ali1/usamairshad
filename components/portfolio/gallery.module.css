@@ -1,0 +1,64 @@
+.gallery {
+  --gallery-scale: 1;
+  position: relative;
+  isolation: isolate;
+  height: 1190px;
+  padding-top: 120px;
+  overflow-x: clip;
+  background: radial-gradient(ellipse 100% 700px at 50% 0, #f66b6b, transparent 95%), #000;
+  font-family: "Portfolio Inter", Arial, sans-serif;
+  scroll-margin-top: 100px;
+}
+
+.heading {
+  position: absolute;
+  z-index: 1;
+  top: -51px;
+  left: 11px;
+  margin: 0;
+  color: #ffb8b8;
+  font-size: 260px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.letterMask { display: inline-block; overflow: hidden; padding-bottom: .15em; margin-bottom: -.15em; vertical-align: top; }
+.letterMask > span { display: inline-block; }
+
+.stage {
+  position: relative;
+  z-index: 2;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(10px * var(--gallery-scale));
+  width: max-content;
+  padding: 50px 0 60px;
+  transform: perspective(1971px) rotate(-5deg);
+}
+
+.rowTrack { position: relative; width: max-content; height: calc(var(--row-height) * var(--gallery-scale)); }
+.row { display: flex; align-items: center; gap: calc(10px * var(--gallery-scale)); height: 100%; overflow: clip; }
+.tileSlot { position: relative; flex: 0 0 calc(var(--tile-width) * var(--gallery-scale)); width: calc(var(--tile-width) * var(--gallery-scale)); height: 100%; }
+.tile { position: absolute; inset: 0; overflow: hidden; }
+.tile img { object-fit: cover; object-position: center; user-select: none; }
+
+@media (max-width: 1100px) {
+  .gallery { --gallery-scale: .8; height: 990px; }
+  .heading { font-size: 210px; top: -30px; }
+}
+
+@media (max-width: 700px) {
+  .gallery { --gallery-scale: .55; height: 690px; padding-top: 65px; background: radial-gradient(ellipse 150% 500px at 50% 0, #f66b6b, transparent 95%), #000; }
+  .heading { left: 20px; top: -20px; font-size: clamp(82px, 22vw, 150px); }
+  .stage { padding-top: 35px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { opacity: 1 !important; transform: none !important; }
+  .row { transform: none !important; }
+  .letterMask > span { transform: none !important; }
+}
