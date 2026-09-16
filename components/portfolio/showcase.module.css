@@ -96,7 +96,7 @@
   .introTitle { font-size: clamp(36px, 9.8vw, 54px); line-height: 1.2; }
   .introDescription { font-size: 18px; line-height: 1.6; }
   .work { width: var(--content-width); padding-inline: 0; scroll-margin-top: 85px; }
-  .projectsHeading { font-size: clamp(94px, 23vw, 150px); margin-left: 0; margin-bottom: -.2em; line-height: 1.1; }
+  .projectsHeading { font-size: clamp(min(94px, 24vw), 23vw, 150px); margin-left: 0; margin-bottom: -.2em; line-height: 1.1; }
   .projectGrid { grid-template-columns: 1fr; gap: 28px; }
   .projectCategory { font-size: 14px; }
   .projectInfo { min-height: 74px; padding: 14px 16px; }

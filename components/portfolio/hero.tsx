@@ -18,21 +18,21 @@ export function Hero() {
       <HeroCarousel />
       <div className={styles.container}>
         <motion.div className={styles.portrait} style={reducedMotion ? {} : { y: portraitY }}>
-          <Image src="/images/usama-portrait.png" alt="Usama Irshad, senior brand and motion designer" fill sizes="(max-width: 809px) 150vw, 800px" preload className={styles.portraitImage} />
+          <Image src="/images/usama-portrait.png" alt="Usama Irshad, senior brand and motion designer" fill sizes="(max-width: 809px) 130vw, (max-width: 1199px) 640px, 800px" preload className={styles.portraitImage} />
         </motion.div>
         <div className={styles.content}>
           <div className={styles.title}>
             <p className={styles.eyebrow}>Hi, I’m Usama Irshad</p>
             <h1 id="hero-title">Brand &amp;<br />Motion Designer</h1>
+            <a href="#contact" className={styles.action}>
+              <span className={styles.actionIcon}><ArrowRight size={18} aria-hidden="true" /></span>
+              <span>Start a project</span>
+            </a>
           </div>
           <div className={styles.quote}>
             <p>“Where others add visuals,<br />I create <span>meaning.</span>”</p>
-            <span className={styles.signature}>Usama Irshad</span>
+            <Image src="/images/usama-signature.png" alt="Usama Irshad’s signature" width={1041} height={438} sizes="240px" className={styles.signature} />
           </div>
-          <a href="#contact" className={styles.action}>
-            <span className={styles.actionIcon}><ArrowRight size={18} aria-hidden="true" /></span>
-            <span>Start a project</span>
-          </a>
         </div>
       </div>
     </section>
