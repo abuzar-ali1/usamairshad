@@ -38,8 +38,16 @@
   transform: translateX(-50%) perspective(1971px) rotate(-5deg);
 }
 
-.rowTrack { position: relative; width: max-content; height: calc(var(--row-height) * var(--gallery-scale)); }
-.row { display: flex; align-items: center; gap: calc(10px * var(--gallery-scale)); height: 100%; overflow: clip; }
+.rowTrack { position: relative; width: max(100vw, calc(var(--row-width) * var(--gallery-scale))); height: calc(var(--row-height) * var(--gallery-scale)); overflow: clip; }
+.row { display: flex; width: max-content; height: 100%; animation: gallery-marquee var(--marquee-duration) linear infinite paused; }
+.row[data-direction="right"] { animation-direction: reverse; }
+.rowGroup { display: flex; flex-shrink: 0; align-items: center; gap: calc(10px * var(--gallery-scale)); padding-right: calc(10px * var(--gallery-scale)); height: 100%; }
+.gallery[data-running="true"] .row { animation-play-state: running; }
+
+@keyframes gallery-marquee {
+  to { transform: translateX(calc(-100% / 3)); }
+}
+
 .tileSlot { position: relative; flex: 0 0 calc(var(--tile-width) * var(--gallery-scale)); width: calc(var(--tile-width) * var(--gallery-scale)); height: 100%; }
 .tile { position: absolute; inset: 0; overflow: hidden; }
 .tile img { object-fit: cover; object-position: center; user-select: none; }
@@ -57,6 +65,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tile { opacity: 1 !important; transform: none !important; }
-  .row { transform: none !important; }
+  .row { animation: none; transform: none !important; }
   .letterMask > span { transform: none !important; }
 }

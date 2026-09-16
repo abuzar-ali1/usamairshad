@@ -11,10 +11,9 @@ export type GalleryImage = {
 
 const rise = { y: 1000, scale: 2, rotateX: 30 };
 
-export const galleryRows: { height: number; drift: [number, number]; images: GalleryImage[] }[] = [
+export const galleryRows: { height: number; images: GalleryImage[] }[] = [
   {
     height: 317,
-    drift: [-90, -160],
     images: [
       { file: "CAnTuyC7rYGbO1sbhC8LNj6E", alt: "Natural supplements product advertising design", width: 297.85, entrance: { x: -1500, y: 300, scale: 2.5, rotate: -5, rotateY: 70 } },
       { file: "xU3Y5CRvHR14O0gvFohqrB3Yk", alt: "Laptop website presentation on a purple background", width: 482, zoom: 1.37, background: "var(--accent)" },
@@ -28,7 +27,6 @@ export const galleryRows: { height: number; drift: [number, number]; images: Gal
   },
   {
     height: 311,
-    drift: [165, 294],
     images: [
       { file: "WM37fJNWkOHdwpPvGrRSVJthUtI", alt: "Square product campaign design", width: 292.21, entrance: { x: -600, y: 200, scale: 1.5, rotate: -5, rotateY: 50 } },
       { file: "oXx5YN6Rc4ffiyEC9Ma4Yi0BM", alt: "Security camera advertising design", width: 292.21, entrance: { x: -200, y: 350, scale: 1.5, rotate: -5, rotateY: 25 } },
@@ -42,7 +40,6 @@ export const galleryRows: { height: number; drift: [number, number]; images: Gal
   },
   {
     height: 312,
-    drift: [-160, -286],
     images: [
       { file: "ektPYkRwXdAGe7RkgchAZ4fSmk", alt: "Portrait format brand poster", width: 293.15, entrance: rise },
       { file: "00percz9Dsm8T9bbRGe5AxQqic", alt: "Colorful advertising poster", width: 293.15, entrance: rise },
