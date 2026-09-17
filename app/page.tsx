@@ -4,6 +4,8 @@ import { Introduction } from "@/components/portfolio/introduction";
 import { WorkSection } from "@/components/portfolio/work-section";
 import { ExperienceSection } from "@/components/portfolio/experience-section";
 import { GallerySection } from "@/components/portfolio/gallery-section";
+import { WhyUsSection } from "@/components/portfolio/why-us-section";
+import { TeamSection } from "@/components/portfolio/team-section";
 import { AboutSection } from "@/components/portfolio/about-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
 import { MotionProvider } from "@/components/portfolio/motion-provider";
@@ -23,6 +25,8 @@ export default function Home() {
           <ExperienceSection />
           <GallerySection />
         </div>
+        <WhyUsSection />
+        <TeamSection />
         <div className="content-grid">
           <AboutSection />
         </div>

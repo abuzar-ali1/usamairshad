@@ -1,0 +1,148 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  height: 300svh;
+  background: #f1edf9;
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  overflow: clip;
+  padding: 88px 0 16px;
+}
+
+.gridPattern {
+  position: absolute;
+  inset: 10% 8%;
+  background-image: linear-gradient(#7854ad10 1px, transparent 1px), linear-gradient(90deg, #7854ad10 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse, #000 10%, transparent 70%);
+  pointer-events: none;
+}
+
+.composition {
+  position: relative;
+  width: min(84%, 1425px);
+  height: min(826px, calc(100svh - 104px));
+}
+
+.card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 560px;
+  height: 100%;
+  margin-inline: auto;
+  padding: clamp(48px, 10svh, 96px) 80px;
+  color: var(--foreground);
+  background: #0e0a18;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: #0e0a18;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.heading, .signoff { position: relative; }
+.kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: var(--lavender); font: 500 12px/1.4 "Courier New", monospace; text-transform: uppercase; letter-spacing: .15em; }
+.kicker span { font-size: 7px; }
+.heading h2 { font: 400 60px/1 var(--serif); letter-spacing: -.055em; }
+.signoff { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.signature { width: 156px; height: auto; flex-shrink: 0; filter: invert(1); }
+.signoff p { max-width: 220px; color: #ded8e8; font-size: 16px; line-height: 1.4; text-align: right; letter-spacing: -.025em; }
+
+.statistics { position: absolute; z-index: 1; inset: 0; margin: 0; }
+.statistic { position: absolute; display: flex; flex-direction: column-reverse; width: calc((100% - 640px) / 2); gap: 14px; }
+.statistic:nth-child(1) { left: 0; top: 0; text-align: right; }
+.statistic:nth-child(2) { left: 0; top: 30%; text-align: right; }
+.statistic:nth-child(3) { right: 0; bottom: 30%; }
+.statistic:nth-child(4) { right: 0; bottom: 0; }
+.statistic dt { max-width: 290px; color: #6c627b; font: 500 12px/1.5 "Courier New", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.statistic:nth-child(-n+2) dt { margin-left: auto; }
+.statistic dd { margin: 0; color: #8655bc; font: 400 clamp(62px, 6.25vw, 108px)/1 var(--serif); letter-spacing: -.055em; white-space: nowrap; }
+.statistic:last-child dd { font-size: clamp(42px, 4vw, 72px); }
+
+@media (max-width: 1500px) {
+  .composition { width: min(90%, 1160px); height: min(680px, calc(100svh - 104px)); }
+  .card { width: 440px; padding: 48px; }
+  .heading h2 { font-size: 50px; }
+  .signature { width: 125px; }
+  .signoff { gap: 20px; }
+  .signoff p { font-size: 14px; }
+  .statistic { width: calc((100% - 504px) / 2); }
+}
+
+@media (max-width: 1050px) {
+  .composition { width: calc(100% - 48px); }
+  .card { width: 380px; padding: 36px 32px; }
+  .heading h2 { font-size: 46px; }
+  .statistic { width: calc((100% - 420px) / 2); }
+  .statistic dd { font-size: 66px; }
+  .statistic:last-child dd { font-size: 38px; }
+  .statistic dt { font-size: 10px; letter-spacing: .08em; }
+}
+
+@media (max-width: 760px) {
+  .section { height: 260svh; }
+  .stage { padding: 24px 0; }
+  .composition { display: flex; flex-direction: column; gap: 24px; width: calc(100% - 40px); height: auto; }
+  .card { width: 100%; height: 58svh; max-height: 540px; min-height: 320px; padding: 32px 28px; }
+  .kicker { font-size: 10px; margin-bottom: 20px; }
+  .heading h2 { font-size: clamp(36px, 9vw, 52px); }
+  .signature { width: 110px; }
+  .signoff { gap: 18px; }
+  .signoff p { font-size: 12px; line-height: 1.45; }
+  .statistics { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; }
+  .statistic:nth-child(n) { position: relative; inset: auto; width: auto; text-align: left; gap: 5px; }
+  .statistic dd { font-size: 44px; }
+  .statistic:last-child dd { font-size: 32px; line-height: 44px; }
+  .statistic dt { font-size: 8px; line-height: 1.4; letter-spacing: .08em; max-width: 160px; margin-left: 0; }
+}
+
+@media (max-height: 650px) {
+  .stage { padding-block: 24px; }
+  .composition { height: calc(100svh - 48px); }
+  .card { padding-block: 24px; }
+  .heading h2 { font-size: 38px; }
+  .kicker { margin-bottom: 12px; }
+}
+
+@media (max-width: 760px) and (max-height: 650px) {
+  .composition { height: auto; gap: 16px; }
+  .card { min-height: 240px; height: 54svh; padding: 24px; }
+  .heading h2 { font-size: 34px; }
+  .statistics { gap: 12px 24px; }
+  .statistic dd { font-size: 36px; }
+  .statistic:last-child dd { font-size: 28px; line-height: 36px; }
+}
+
+@media (max-width: 760px) and (max-height: 450px) {
+  .stage { padding-block: 16px; }
+  .composition { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 24px; height: calc(100svh - 32px); }
+  .card { min-height: 0; height: 100%; padding: 20px; }
+  .heading h2 { font-size: clamp(24px, 4.6vw, 32px); }
+  .kicker { font-size: 8px; margin-bottom: 10px; }
+  .signoff { gap: 12px; }
+  .signature { width: 80px; }
+  .signoff p { font-size: 10px; }
+  .statistics { grid-template-columns: 1fr; align-content: space-between; gap: 8px; }
+  .statistic dd { font-size: 32px; }
+  .statistic:last-child dd { font-size: 26px; line-height: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section { height: auto; }
+  .stage { position: relative; height: auto; min-height: 100svh; padding-block: 56px; }
+  .backdrop { transform: none !important; will-change: auto; }
+  .statistic { opacity: 1 !important; transform: none !important; }
+}
