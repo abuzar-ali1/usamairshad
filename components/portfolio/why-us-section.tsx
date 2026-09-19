@@ -20,7 +20,7 @@ function ImpactStatistic({ index, progress, reducedMotion }: {
 }) {
   const stat = statistics[index];
   const start = .38 + index * .1;
-  const reveal = useTransform(progress, [start, start + .18], [0, 1]);
+  const reveal = useTransform(progress, (value) => Math.max(0, Math.min(1, (value - start) / .18)));
   const x = useTransform(reveal, [0, 1], [index < 2 ? -200 : 200, 0]);
   const y = useTransform(reveal, [0, 1], [200, 0]);
   const count = useTransform(reveal, (value) => "value" in stat ? `${Math.round(value * stat.value)}${stat.suffix}` : stat.display);

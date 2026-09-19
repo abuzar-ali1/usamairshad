@@ -1,0 +1,115 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding: clamp(80px, 8vw, 140px) 0 clamp(70px, 7vw, 120px);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .26;
+  background-image: linear-gradient(90deg, transparent calc(100% - 1px), #c3b0f119 1px);
+  background-size: 20% 100%;
+  mask-image: linear-gradient(transparent, #000 35%, transparent);
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: -18%;
+  width: 80%;
+  height: 110%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #8550ef1b, transparent 66%);
+  pointer-events: none;
+}
+
+.inner { width: min(84%, 1425px); margin-inline: auto; }
+.topline { display: flex; justify-content: space-between; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); color: var(--muted); font: 400 10px/1.5 "Courier New", monospace; letter-spacing: .1em; text-transform: uppercase; }
+.layout { display: grid; grid-template-columns: .8fr 1.5fr; gap: clamp(50px, 7vw, 130px); padding-top: clamp(52px, 6vw, 90px); }
+.introduction { position: relative; min-width: 0; }
+.kicker { display: flex; align-items: center; gap: 10px; margin-bottom: 23px; color: var(--lavender); font: 500 11px/1.5 "Courier New", monospace; text-transform: uppercase; letter-spacing: .16em; }
+.kicker span { font-size: 8px; }
+.introduction h2 { font: 400 clamp(39px, 3.65vw, 61px)/1.07 var(--serif); letter-spacing: -.055em; }
+.introduction h2 em { font-weight: 400; color: var(--lavender); }
+.description { max-width: 275px; margin-top: 26px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.quoteSymbol { position: relative; display: grid; place-items: center; width: 150px; height: 150px; margin-top: 58px; }
+.quoteSymbol > span:first-of-type { position: relative; height: 92px; color: var(--lavender); font: 400 164px/.96 var(--serif); }
+.orbit { position: absolute; inset: 0; border: 1px solid #c3b0f126; border-radius: 50%; transform-origin: center; }
+.orbit::before { content: ""; position: absolute; inset: 11px -13px; border: 1px solid #c3b0f119; border-radius: 50%; transform: rotate(-35deg); }
+.orbitPoint { position: absolute; top: 19px; right: 17px; width: 6px; height: 6px; border-radius: 50%; background: var(--lavender); box-shadow: 0 0 18px #8550ef80; }
+.carousel { min-width: 0; padding-top: 4px; }
+.carousel:focus-visible { outline: 1px solid var(--lavender); outline-offset: 16px; border-radius: 2px; }
+.quoteStage, .sizer { display: grid; grid-template-columns: minmax(0, 1fr); }
+.quoteStage { min-height: 370px; }
+.sizer { grid-area: 1 / 1; visibility: hidden; pointer-events: none; user-select: none; }
+.sizer > .figure { grid-area: 1 / 1; }
+.slide { grid-area: 1 / 1; min-width: 0; }
+.figure { display: flex; flex-direction: column; min-height: 100%; margin: 0; }
+.quoteMeta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 30px; }
+.sampleBadge { border: 1px solid #c3b0f133; padding: 6px 9px; color: var(--lavender); font: 400 9px/1.5 "Courier New", monospace; text-transform: uppercase; letter-spacing: .09em; }
+.discipline { color: var(--muted); font-size: 11px; line-height: 1.5; }
+.quote { margin: 0 0 36px; font: 400 clamp(30px, 3.2vw, 52px)/1.18 var(--serif); letter-spacing: -.043em; text-wrap: pretty; }
+.author { display: flex; align-items: center; gap: 16px; margin-top: auto; padding-top: 10px; }
+.avatar { display: grid; place-items: center; flex: 0 0 48px; width: 48px; height: 48px; border: 1px solid #c3b0f12b; border-radius: 50%; background: #8550ef13; color: var(--lavender); font: italic 400 21px/1 var(--serif); }
+.authorDetails { display: flex; flex-direction: column; gap: 6px; }
+.authorName { font-size: 14px; line-height: 1.3; }
+.authorRole { color: var(--muted); font-size: 11px; line-height: 1.6; }
+.authorMark { margin-left: auto; padding-left: 10px; color: var(--lavender); font-size: 32px; font-weight: 300; opacity: .55; }
+.controls { display: flex; align-items: center; gap: 18px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); }
+.counter { flex-shrink: 0; color: var(--muted); font: 400 11px/1 "Courier New", monospace; letter-spacing: .08em; }
+.counter > span { color: var(--lavender); }
+.indicators { display: flex; align-items: center; gap: 3px; margin-left: auto; }
+.indicator { display: grid; place-items: center; width: 36px; min-height: 44px; padding: 12px 3px; border: 0; background: transparent; }
+.indicator span { display: block; width: 100%; height: 2px; background: #c3b0f130; transition: background .25s, transform .25s; }
+.indicator[aria-pressed="true"] span { background: var(--lavender); transform: scaleY(1.5); }
+.indicator:hover span { background: var(--lavender); }
+.arrows { display: flex; gap: 8px; margin-left: 12px; }
+.arrow { display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 1px solid #c3b0f13d; border-radius: 50%; background: transparent; color: var(--foreground); transition: background .25s, color .25s, border-color .25s; }
+.arrow:hover { border-color: var(--lavender); background: var(--lavender); color: var(--background); }
+.sampleNote { margin-top: 54px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.screenReaderOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+@media (max-width: 1050px) {
+  .layout { grid-template-columns: .8fr 1.25fr; gap: 42px; }
+  .introduction h2 { font-size: 42px; }
+  .quote { font-size: 34px; }
+  .quoteStage { min-height: 400px; }
+  .quoteSymbol { width: 130px; height: 130px; }
+}
+
+@media (max-width: 760px) {
+  .inner { width: calc(100% - 40px); }
+  .topline { font-size: 9px; }
+  .topline span:last-child { text-align: right; }
+  .layout { grid-template-columns: 1fr; gap: 42px; padding-top: 42px; }
+  .introduction h2 { font-size: clamp(42px, 9vw, 60px); }
+  .description { max-width: 330px; margin-top: 22px; }
+  .quoteSymbol { display: none; }
+  .carousel { padding-top: 0; }
+  .quoteStage { min-height: 345px; }
+  .quote { font-size: clamp(29px, 5.7vw, 39px); line-height: 1.21; margin-bottom: 30px; }
+  .quoteMeta { margin-bottom: 26px; gap: 10px; }
+  .controls { margin-top: 28px; padding-top: 20px; }
+  .sampleNote { margin-top: 36px; font-size: 10px; }
+  .glow { right: -50%; width: 150%; }
+}
+
+@media (max-width: 380px) {
+  .controls { gap: 8px; }
+  .indicators { gap: 1px; }
+  .indicator { width: 29px; }
+  .arrows { margin-left: 4px; gap: 6px; }
+  .arrow { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicator span, .arrow { transition: none; }
+}
