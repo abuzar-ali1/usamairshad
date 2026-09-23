@@ -4,6 +4,7 @@ import { Introduction } from "@/components/portfolio/introduction";
 import { WorkSection } from "@/components/portfolio/work-section";
 import { ExperienceSection } from "@/components/portfolio/experience-section";
 import { GallerySection } from "@/components/portfolio/gallery-section";
+import { VideoSection } from "@/components/portfolio/video-section";
 import { WhyUsSection } from "@/components/portfolio/why-us-section";
 import { TeamSection } from "@/components/portfolio/team-section";
 import { ClientReviewsSection } from "@/components/portfolio/client-reviews-section";
@@ -27,6 +28,7 @@ export default function Home() {
           <ExperienceSection />
           <GallerySection />
         </div>
+        <VideoSection />
         <WhyUsSection />
         <TeamSection />
         <ClientReviewsSection />
