@@ -75,7 +75,7 @@ export function TestimonialsSection() {
           <div className={styles.introduction}>
             <Reveal>
               <p className={styles.kicker}><span aria-hidden="true">●</span> Testimonials</p>
-              <h2 id="testimonials-heading">Good work.<br /><em>Better together.</em></h2>
+              <h2 id="testimonials-heading">The work<br /><em>lives in the details.</em></h2>
               <p className={styles.description}>Thoughtful design starts with a conversation. The best part is what we build together.</p>
             </Reveal>
             <div className={styles.quoteSymbol} aria-hidden="true">
