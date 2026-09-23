@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useAnimationFrame, useInView, useMotionTemplate, useMotionValue, useReducedMotion } from "motion/react";
+import { motion, useAnimationFrame, useInView, useMotionTemplate, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { useEffect, useRef } from "react";
 import styles from "./hero.module.css";
 
@@ -18,13 +18,21 @@ const images = [
 ];
 const panels = [...images, ...images];
 
-export function HeroCarousel() {
+function smoothStep(value: number) {
+  const progress = Math.max(0, Math.min(1, value));
+  return progress * progress * (3 - 2 * progress);
+}
+
+export function HeroCarousel({ introProgress }: { introProgress: MotionValue<number> }) {
   const stage = useRef<HTMLDivElement>(null);
   const active = useInView(stage);
   const reducedMotion = useReducedMotion();
   const rotation = useMotionValue(0);
   const scale = useMotionValue(0.848793);
   const transform = useMotionTemplate`translateZ(-470px) scale(${scale}) rotateY(${rotation}deg)`;
+  const opacity = useTransform(introProgress, [0, 0.55], [0, 1]);
+  const entryY = useTransform(introProgress, [0, 0.75], [20, 0]);
+  const panelScale = useTransform(introProgress, [0, 1.1], [0.68, 1], { ease: (value) => 1 - (1 - value) ** 3 });
 
   useEffect(() => {
     if (!stage.current) return;
@@ -38,20 +46,27 @@ export function HeroCarousel() {
 
   useAnimationFrame((_, delta) => {
     if (!active || reducedMotion !== false || document.hidden) return;
-    rotation.set((rotation.get() + Math.min(delta, 50) * 0.005) % 360);
+    const elapsed = introProgress.get();
+    if (elapsed === 0) return;
+    const speed = elapsed < 0.65
+      ? 5 + 95 * smoothStep(elapsed / 0.65)
+      : 100 - 95 * smoothStep((elapsed - 1.05) / 2.15);
+    rotation.set((rotation.get() + Math.min(delta, 50) * speed / 1000) % 360);
   });
 
   return (
-    <div className={styles.carousel} aria-hidden="true">
+    <motion.div className={styles.carousel} aria-hidden="true" style={{ opacity, y: reducedMotion ? 0 : entryY }}>
       <div ref={stage} className={styles.carouselStage}>
         <motion.div className={styles.carouselRing} style={{ transform }}>
           {panels.map((panel, index) => (
             <div className={styles.carouselPanel} key={index} style={{ transform: `translate(-50%, -50%) rotateY(${index * 360 / panels.length}deg) translateZ(-1449.3px)` }}>
-              <Image src={panel.src} alt="" fill sizes="320px" loading="eager" style={{ objectPosition: panel.position }} />
+              <motion.div style={{ position: "absolute", inset: 0, scale: reducedMotion ? 1 : panelScale }}>
+                <Image src={panel.src} alt="" fill sizes="320px" loading="eager" style={{ objectPosition: panel.position }} />
+              </motion.div>
             </div>
           ))}
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
