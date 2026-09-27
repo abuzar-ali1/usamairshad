@@ -15,20 +15,16 @@ type VideoClip = {
   captions?: string;
 };
 
-// Add src: "/videos/your-film.mp4" (and an optional poster/captions file)
-// to replace a skeleton. Only the focused, visible video plays.
-const clips: VideoClip[] = [
-  { title: "Brand reveal", description: "A first impression, brought to life through motion." },
-  { title: "Identity in motion", description: "A visual language with a rhythm of its own." },
-  { title: "Packaging stories", description: "Considered details. A new way to see the everyday." },
-  { title: "Type in motion", description: "Words with presence, personality, and a little movement." },
-  { title: "Campaign moments", description: "Bold ideas, made to catch the eye and stay in mind." },
-  { title: "Product spotlight", description: "Light, texture, and the details that make a difference." },
-  { title: "Logo explorations", description: "From a simple mark to a memorable moving identity." },
-  { title: "Studio process", description: "A glimpse at the thinking behind the finished frame." },
-  { title: "Visual rhythm", description: "Shape, colour, and composition finding their flow." },
-  { title: "Selected showreel", description: "A collection of ideas, connected through motion." },
-];
+// Each reel uses a compressed local film; posters display before a reel is first focused.
+const clips: VideoClip[] = Array.from({ length: 13 }, (_, index) => {
+  const number = String(index + 1).padStart(2, "0");
+  return {
+    title: `Motion reel ${number}`,
+    description: "A closer look at selected motion work.",
+    src: `/vedios/motion-reel-${number}-web.mp4`,
+    poster: `/vedios/motion-reel-${number}.jpg`,
+  };
+});
 
 const ASPECT_RATIO = 0.68;
 const BASE_WIDTH = 440;
@@ -63,6 +59,7 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
   const [muted, setMuted] = useState(true);
   const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [hasRequestedVideo, setHasRequestedVideo] = useState(active && inView);
   const hasVideo = Boolean(clip.src) && !failed;
   const width = useTransform(() => cardWidth.get() * scaleAt(Math.abs(slot - position.get())));
   const height = useTransform(() => width.get() / ASPECT_RATIO);
@@ -74,16 +71,19 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
   });
   const zIndex = useTransform(() => 100 - Math.round(Math.abs(slot - position.get()) * 10));
 
+  // Keep the source once selected so returning to a mounted reel preserves playback.
+  if (active && inView && !hasRequestedVideo) setHasRequestedVideo(true);
+
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !hasRequestedVideo) return;
     if (active && inView && !reducedMotion && !document.hidden) {
       void video.play().catch(() => { /* The play control remains available if autoplay is blocked. */ });
     } else {
       video.pause();
     }
     return () => video.pause();
-  }, [active, inView, reducedMotion, clip.src]);
+  }, [active, inView, reducedMotion, clip.src, hasRequestedVideo]);
 
   function togglePlayback() {
     const video = videoRef.current;
@@ -106,9 +106,9 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
         <video
           ref={videoRef}
           className={styles.video}
-          src={clip.src}
+          src={hasRequestedVideo ? clip.src : undefined}
           poster={clip.poster}
-          preload={active ? "metadata" : "none"}
+          preload={active && inView ? "metadata" : "none"}
           playsInline
           loop
           muted={muted}
@@ -118,6 +118,7 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
           onPause={() => setPlaying(false)}
         >
           {clip.captions && <track kind="captions" src={clip.captions} srcLang="en" label="English" default />}
+          Your browser does not support video playback.
         </video>
       ) : (
         <motion.div className={styles.skeleton} style={{ scale: contentScale }} aria-hidden="true">
@@ -138,14 +139,14 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
       <button
         className={styles.selectCard}
         type="button"
-        aria-label={`Focus ${clip.title}${hasVideo ? "" : " video placeholder"}`}
+        aria-label={`Focus ${clip.title}${hasVideo ? "" : ": preview unavailable"}`}
         aria-current={active ? "true" : undefined}
         tabIndex={active ? 0 : -1}
         onClick={() => select(slot)}
       />
 
       <motion.div className={styles.captionCanvas} style={{ scale: contentScale }} aria-hidden={!active}>
-        <span className={styles.previewLabel}>{hasVideo ? "Motion study" : "Video coming soon"}</span>
+        <span className={styles.previewLabel}>{hasVideo ? "Motion study" : "Preview unavailable"}</span>
         <div className={styles.caption}>
           <span className={styles.clipNumber}>MOTION / {String(number + 1).padStart(2, "0")}</span>
           <h3>{clip.title}</h3>
@@ -160,9 +161,9 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
             type="button"
             onClick={() => setMuted((value) => !value)}
             disabled={!hasVideo}
-            aria-label={hasVideo ? (muted ? "Unmute video" : "Mute video") : "Sound available when the video is added"}
+            aria-label={hasVideo ? (muted ? "Unmute video" : "Mute video") : "Sound unavailable"}
             aria-pressed={hasVideo ? !muted : undefined}
-            title={hasVideo ? undefined : "Video coming soon"}
+            title={hasVideo ? undefined : "Preview unavailable"}
           >
             {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
           </button>
@@ -236,7 +237,7 @@ export function VideoSection() {
         onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
         data-animate={visible && !paused && !reducedMotion}
       >
-        <p id="video-instructions" className={styles.srOnly}>Drag, swipe, or scroll sideways to explore. When focused, use the scroll wheel or arrow keys. Video placeholders are shown until the films are added.</p>
+        <p id="video-instructions" className={styles.srOnly}>Drag, swipe, or scroll sideways to explore. Scroll up or down to move through the page. When focused, use the left and right arrow keys to choose a reel. The focused reel plays silently. Use the video controls to pause playback or turn on sound.</p>
         <motion.div className={styles.stage} onPanStart={onPanStart} onPan={onPan} onPanEnd={onPanEnd} onClickCapture={onClickCapture}>
           <div className={styles.sizer} ref={sizerRef} aria-hidden="true" />
           {Array.from({ length: 13 }, (_, offset) => virtualIndex + offset - 6).map((slot) => {
@@ -247,7 +248,7 @@ export function VideoSection() {
         </motion.div>
 
         <div className={styles.navigation}>
-          <p className={styles.hint}><span>Drag to explore</span><span>Video previews coming soon</span></p>
+          <p className={styles.hint}><span>Drag to explore</span><span>Focus a reel to watch</span></p>
           <div className={styles.controls}>
             <button type="button" onClick={previous} aria-label="Previous video"><ArrowLeft size={18} /></button>
             <span className={styles.counter} aria-hidden="true">{String(activeIndex + 1).padStart(2, "0")}<span>/ {String(clips.length).padStart(2, "0")}</span></span>

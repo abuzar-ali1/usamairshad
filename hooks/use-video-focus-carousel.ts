@@ -155,11 +155,10 @@ export function useVideoFocusCarousel(itemCount: number, { dragStep = 320, initi
     const onWheel = (event: WheelEvent) => {
       if (event.defaultPrevented || event.ctrlKey || event.metaKey || panRef.current?.axis === "horizontal") return;
       const horizontal = Math.abs(event.deltaX) > Math.abs(event.deltaY);
-      const shifted = event.shiftKey && event.deltaY !== 0;
-      // Ordinary vertical page scrolling remains native, including on touch screens.
-      if (!horizontal && !shifted && document.activeElement !== region) return;
+      // Vertical scrolling always belongs to the page, even while this carousel is focused.
+      if (!horizontal) return;
 
-      const rawDelta = horizontal ? event.deltaX : event.deltaY;
+      const rawDelta = event.deltaX;
       if (!rawDelta) return;
       event.preventDefault();
       event.stopPropagation();

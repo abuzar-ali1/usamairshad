@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+# Original video masters stay local and are not part of the website export.
+/.local/video-originals/
 /.git.codex-unborn-backup/
 /.git.codex-unborn-backup-2/
 
