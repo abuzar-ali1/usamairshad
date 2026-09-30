@@ -7,7 +7,6 @@ import { GallerySection } from "@/components/portfolio/gallery-section";
 import { VideoSection } from "@/components/portfolio/video-section";
 import { WhyUsSection } from "@/components/portfolio/why-us-section";
 import { TeamSection } from "@/components/portfolio/team-section";
-import { ClientReviewsSection } from "@/components/portfolio/client-reviews-section";
 import { TestimonialsSection } from "@/components/portfolio/testimonials-section";
 import { AboutSection } from "@/components/portfolio/about-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
@@ -31,7 +30,6 @@ export default function Home() {
         <VideoSection />
         <WhyUsSection />
         <TeamSection />
-        <ClientReviewsSection />
         <TestimonialsSection />
         <div className="content-grid">
           <AboutSection />

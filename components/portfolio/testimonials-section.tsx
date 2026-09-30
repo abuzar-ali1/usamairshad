@@ -1,31 +1,30 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { featuredTestimonials } from "@/lib/client-feedback";
-import { Reveal } from "./reveal";
+import Image from "next/image";
+import { useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { Pause, Play } from "lucide-react";
+import { clientReviews, featuredTestimonials } from "@/lib/client-feedback";
 import styles from "./testimonials.module.css";
 
-type Testimonial = (typeof featuredTestimonials)[number];
+const testimonials = [...clientReviews, ...featuredTestimonials];
+type Testimonial = (typeof testimonials)[number];
 
-function Quote({ testimonial }: { testimonial: Testimonial }) {
+function ReviewCard({ review, index }: { review: Testimonial; index: number }) {
   return (
-    <figure className={styles.figure}>
-      <div className={styles.quoteMeta}>
-        <span className={styles.sampleBadge}>Sample testimonial</span>
-        <span className={styles.discipline}>{testimonial.discipline}</span>
-      </div>
-      <blockquote className={styles.quote}>
-        <p>“{testimonial.quote}”</p>
-      </blockquote>
+    <figure className={styles.card}>
+      <blockquote className={styles.quote}>{review.quote}</blockquote>
       <figcaption className={styles.author}>
-        <span className={styles.avatar} aria-hidden="true">{testimonial.initials}</span>
-        <span className={styles.authorDetails}>
-          <span className={styles.authorName}>{testimonial.name}</span>
-          <span className={styles.authorRole}>{testimonial.role}</span>
-        </span>
-        <span className={styles.authorMark} aria-hidden="true">✳</span>
+        <Image
+          className={styles.avatar}
+          src={`/images/testimonials/avatar-${String(index + 1).padStart(2, "0")}.png`}
+          alt=""
+          width={48}
+          height={48}
+          sizes="48px"
+        />
+        <span className={styles.name}>{review.name}</span>
+        <span className={styles.role}>{review.role.split(" · ")[0]}</span>
       </figcaption>
     </figure>
   );
@@ -33,114 +32,55 @@ function Quote({ testimonial }: { testimonial: Testimonial }) {
 
 export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
-  const [{ index, direction }, setSelection] = useState({ index: 0, direction: 1 });
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const glowY = useTransform(scrollYProgress, [0, 1], [70, -70]);
-  const orbitRotate = useTransform(scrollYProgress, [0, 1], [-12, 12]);
-  const testimonial = featuredTestimonials[index];
-  const total = featuredTestimonials.length;
-
-  function step(offset: number) {
-    setSelection((current) => ({ index: (current.index + offset + total) % total, direction: offset }));
-  }
-
-  function select(nextIndex: number) {
-    if (nextIndex === index) return;
-    setSelection({ index: nextIndex, direction: nextIndex > index ? 1 : -1 });
-  }
-
-  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      step(1);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      step(-1);
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      select(0);
-    } else if (event.key === "End") {
-      event.preventDefault();
-      select(total - 1);
-    }
-  }
+  const inView = useInView(sectionRef, { amount: .1 });
+  const reducedMotion = useReducedMotion();
+  const [paused, setPaused] = useState(false);
 
   return (
     <section ref={sectionRef} id="testimonials" className={styles.section} aria-labelledby="testimonials-heading">
-      <motion.div className={styles.glow} aria-hidden="true" style={reduceMotion ? undefined : { y: glowY }} />
-      <div className={styles.inner}>
-        <div className={styles.topline} aria-hidden="true"><span>Creative partnerships</span><span>A shared perspective</span></div>
-        <div className={styles.layout}>
-          <div className={styles.introduction}>
-            <Reveal>
-              <p className={styles.kicker}><span aria-hidden="true">●</span> Testimonials</p>
-              <h2 id="testimonials-heading">The work<br /><em>lives in the details.</em></h2>
-              <p className={styles.description}>Thoughtful design starts with a conversation. The best part is what we build together.</p>
-            </Reveal>
-            <div className={styles.quoteSymbol} aria-hidden="true">
-              <motion.div className={styles.orbit} style={reduceMotion ? undefined : { rotate: orbitRotate }} />
-              <span>“</span>
-              <span className={styles.orbitPoint} />
+      <span id="client-reviews" className={styles.anchor} aria-hidden="true" />
+      <div className={styles.glow} aria-hidden="true" />
+      <h2 id="testimonials-heading" className={styles.heading} aria-label="What Clients Say">
+        {["What", "Clients", "Say"].map((word, index) => (
+          <span key={word} className={styles.wordMask} aria-hidden="true">
+            <motion.span
+              initial={false}
+              whileInView={reducedMotion ? {} : { y: ["105%", "0%"], opacity: [.2, 1] }}
+              viewport={{ once: true, amount: .4 }}
+              transition={{ duration: .7, delay: index * .07, ease: [.22, 1, .36, 1] }}
+            >{word}</motion.span>
+          </span>
+        ))}
+      </h2>
+      <div
+        className={styles.marquee}
+        role="region"
+        aria-label="Client reviews"
+        aria-describedby="reviews-note"
+        tabIndex={0}
+        data-running={inView && !paused}
+        data-lenis-prevent-horizontal
+      >
+        <div className={styles.track}>
+          {[0, 1].map((copy) => (
+            <div key={copy} className={styles.group} aria-hidden={copy === 1 ? true : undefined}>
+              {testimonials.map((review, index) => <ReviewCard key={review.id} review={review} index={index} />)}
             </div>
-          </div>
-          <div
-            className={styles.carousel}
-            role="group"
-            aria-roledescription="carousel"
-            aria-label="Featured testimonials"
-            tabIndex={0}
-            onKeyDown={handleKeyDown}
-          >
-            <div className={styles.quoteStage}>
-              <div className={styles.sizer} aria-hidden="true">
-                {featuredTestimonials.map((item) => <Quote key={item.id} testimonial={item} />)}
-              </div>
-              <AnimatePresence initial={false} mode="wait" custom={direction}>
-                <motion.div
-                  key={testimonial.id}
-                  className={styles.slide}
-                  role="group"
-                  aria-roledescription="slide"
-                  aria-label={`${index + 1} of ${total}`}
-                  custom={direction}
-                  variants={{
-                    enter: (travel: number) => ({ opacity: 0, x: reduceMotion ? 0 : travel * 28 }),
-                    center: { opacity: 1, x: 0 },
-                    exit: (travel: number) => ({ opacity: 0, x: reduceMotion ? 0 : travel * -20 }),
-                  }}
-                  initial="enter"
-                  animate="center"
-                  exit="exit"
-                  transition={{ duration: reduceMotion ? 0 : .3, ease: [.22, 1, .36, 1] }}
-                >
-                  <Quote testimonial={testimonial} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <div className={styles.controls}>
-              <span className={styles.counter} aria-hidden="true"><span>{String(index + 1).padStart(2, "0")}</span> / {String(total).padStart(2, "0")}</span>
-              <div className={styles.indicators} role="group" aria-label="Choose a testimonial">
-                {featuredTestimonials.map((item, itemIndex) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={styles.indicator}
-                    aria-label={`Show testimonial from ${item.name}`}
-                    aria-pressed={index === itemIndex}
-                    onClick={() => select(itemIndex)}
-                  ><span /></button>
-                ))}
-              </div>
-              <div className={styles.arrows}>
-                <button className={styles.arrow} type="button" onClick={() => step(-1)} aria-label="Previous testimonial"><ArrowLeft size={19} strokeWidth={1.5} aria-hidden="true" /></button>
-                <button className={styles.arrow} type="button" onClick={() => step(1)} aria-label="Next testimonial"><ArrowRight size={19} strokeWidth={1.5} aria-hidden="true" /></button>
-              </div>
-            </div>
-            <p className={styles.screenReaderOnly} aria-live="polite" aria-atomic="true">Testimonial {index + 1} of {total}: {testimonial.name}, {testimonial.discipline}.</p>
-          </div>
+          ))}
         </div>
-        <p className={styles.sampleNote}>Illustrative feedback — replace with approved client quotes.</p>
+      </div>
+      <div className={styles.footer}>
+        <p id="reviews-note">Sample client feedback · For illustration</p>
+        <button
+          className={styles.pause}
+          type="button"
+          aria-label={paused ? "Resume scrolling reviews" : "Pause scrolling reviews"}
+          aria-pressed={paused}
+          onClick={() => setPaused((current) => !current)}
+        >
+          {paused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
+          <span>{paused ? "Resume" : "Pause"}</span>
+        </button>
       </div>
     </section>
   );

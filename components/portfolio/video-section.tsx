@@ -26,7 +26,7 @@ const clips: VideoClip[] = Array.from({ length: 13 }, (_, index) => {
   };
 });
 
-const ASPECT_RATIO = 0.68;
+const ASPECT_RATIO = 9 / 16;
 const BASE_WIDTH = 440;
 
 function scaleAt(distance: number) {
@@ -145,14 +145,7 @@ function VideoCard({ clip, number, slot, position, cardWidth, active, inView, re
         onClick={() => select(slot)}
       />
 
-      <motion.div className={styles.captionCanvas} style={{ scale: contentScale }} aria-hidden={!active}>
-        <span className={styles.previewLabel}>{hasVideo ? "Motion study" : "Preview unavailable"}</span>
-        <div className={styles.caption}>
-          <span className={styles.clipNumber}>MOTION / {String(number + 1).padStart(2, "0")}</span>
-          <h3>{clip.title}</h3>
-          <p>{clip.description}</p>
-        </div>
-      </motion.div>
+      {!hasVideo && <span className={styles.previewLabel}>Preview unavailable</span>}
 
       {active && (
         <div className={styles.mediaControls}>
@@ -246,6 +239,11 @@ export function VideoSection() {
           })}
           <span className={styles.focusMarker} aria-hidden="true" />
         </motion.div>
+
+        <div className={styles.activeCaption}>
+          <h3>{clips[activeIndex].title}</h3>
+          <p>{clips[activeIndex].description}</p>
+        </div>
 
         <div className={styles.navigation}>
           <p className={styles.hint}><span>Drag to explore</span><span>Focus a reel to watch</span></p>
